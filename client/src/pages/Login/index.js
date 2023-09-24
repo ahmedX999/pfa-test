@@ -1,11 +1,26 @@
-import { Button, Form, Input, Radio } from 'antd'
+import { Button, Form, Input, Radio,message } from 'antd'
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { LoginUser } from '../../apicalls/users'
 
 
 function Login() {
   const [type, setType] = React.useState('donar')
-  const onFinish = (values) => { console.log(values) }
+  const onFinish = async (values) => { 
+    try {
+      const response = await LoginUser(values);
+   
+    if (response.success) {
+        
+        message.success(response.message);
+    } else {
+        
+        throw new Error(response.message)
+    }
+    } catch (error) {
+      message.error(error.message);
+    }
+   }
   return (
     <div className='flex h-screen items-center justify-center bg-primary'>
 
@@ -27,7 +42,7 @@ function Login() {
 
 
      
-          <Form.Item label='Login' name='login'>
+          <Form.Item label='Email' name='email'>
             <Input />
           </Form.Item>
           

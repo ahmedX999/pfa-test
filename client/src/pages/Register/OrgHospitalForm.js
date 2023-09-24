@@ -5,7 +5,7 @@ function OrgHospitalForm({ type }) {
     return (
         <>
             <Form.Item label={type === 'hospital' ? 'Hospital Name' : 'Organization Name'}
-                name={type === 'hospital' ? 'hospitalname' : 'organizationname'}
+                name={type === 'hospital' ? 'hospitalName' : 'organizationName'}
             >
                 <Input />
             </Form.Item>

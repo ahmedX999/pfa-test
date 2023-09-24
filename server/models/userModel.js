@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema({
     hospitalName: {
         type: String,
         required: function () {
-            if (this.userType == 'hospital') {
+            if (this.userType == "hospital") {
                 return true;
             }
             return false;
@@ -44,12 +44,12 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true,
-        unique: true,
+     
     },
     phone: {
-        type: String,
+        type: Number,
         required: true,
-     
+
     },
     website: {
         type: String,
@@ -74,6 +74,8 @@ const userSchema = new mongoose.Schema({
     },
 
 
+}, {
+    timestamps: true,
 });
 
-module.exports = mongoose.model("users",userSchema);
+module.exports = mongoose.model("users", userSchema);
