@@ -1,18 +1,23 @@
 import { Button, Form, Input, Radio,message } from 'antd'
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { LoginUser } from '../../apicalls/users'
 
 
 function Login() {
   const [type, setType] = React.useState('donar')
+  const navigate = useNavigate();
   const onFinish = async (values) => { 
     try {
       const response = await LoginUser(values);
+      
    
     if (response.success) {
         
         message.success(response.message);
+        localStorage.setItem("token",response.data);
+        navigate("/");
+
     } else {
         
         throw new Error(response.message)
