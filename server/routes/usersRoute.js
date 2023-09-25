@@ -101,7 +101,7 @@ router.get('/get-current-user',authMiddleware, async (req, res) => {
         //remove the password from the user object 
 
         user.password = undefined;
-        return res.semd({
+        return res.send({
             success: true,
             message: "User was fetched successfully",
             data:user,
