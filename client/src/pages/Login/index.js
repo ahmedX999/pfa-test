@@ -10,14 +10,10 @@ function Login() {
   const onFinish = async (values) => { 
     try {
       const response = await LoginUser(values);
-      
-   
-    if (response.success) {
-        
+    if (response.success) {  
         message.success(response.message);
         localStorage.setItem("token",response.data);
         navigate("/");
-
     } else {
         
         throw new Error(response.message)
