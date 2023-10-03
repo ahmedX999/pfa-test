@@ -1,27 +1,27 @@
-import { Button, Form, Input, Radio,message } from 'antd'
+import { Button, Form, Input, Radio, message } from 'antd'
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { LoginUser } from '../../apicalls/users'
 
 
 function Login() {
-  const [type, setType] = React.useState('donar')
+  const [type, setType] = React.useState("donar")
   const navigate = useNavigate();
-  const onFinish = async (values) => { 
+  const onFinish = async (values) => {
     try {
       const response = await LoginUser(values);
-    if (response.success) {  
+      if (response.success) {
         message.success(response.message);
-        localStorage.setItem("token",response.data);
+        localStorage.setItem("token", response.data);
         navigate("/");
-    } else {
-        
+      } else {
+
         throw new Error(response.message)
-    }
+      }
     } catch (error) {
       message.error(error.message);
     }
-   }
+  }
   return (
     <div className='flex h-screen items-center justify-center bg-primary'>
 
@@ -42,14 +42,14 @@ function Login() {
 
 
 
-     
-          <Form.Item label='Email' name='email'>
-            <Input />
-          </Form.Item>
-          
-          <Form.Item label='Password' name='password'>
-            <Input type='password' />
-          </Form.Item>
+
+        <Form.Item label='Email' name='email'>
+          <Input />
+        </Form.Item>
+
+        <Form.Item label='Password' name='password'>
+          <Input type='password' />
+        </Form.Item>
 
         <Button type='primary' block className='' htmlType='submit'>
           Login
