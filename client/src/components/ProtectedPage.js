@@ -1,15 +1,21 @@
 import { message } from 'antd'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { GetCurrentUser } from '../apicalls/users'
+import { useNavigate } from 'react-router-dom';
+import { getLoggedInUserName } from '../utils/helper';
+import { useDispatch, useSelector } from 'react-redux';
+import { SetCurrentUser } from '../redux/usersSlice';
 
 function ProtectedPage({ children }) {
-    const [currentUSer, serCurrentUser] = useState(null);
+    const { currentUser } = useSelector((state) => state.users);
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
     const getCurrentUser = async () => {
         try {
             const response = await GetCurrentUser();
             if (response.success) {
                 message.success(response.message)
-                serCurrentUser(response.data);
+                dispatch(SetCurrentUser((response.data)))
             }
             else {
                 throw new Error(response.message)
@@ -22,14 +28,20 @@ function ProtectedPage({ children }) {
 
 
     useEffect(() => {
-        getCurrentUser();
+        if (localStorage.getItem("token")) {
+            getCurrentUser();
+        }
+        else {
+            navigate("/login");
+        }
     }, []);
 
 
-    return (<div>
-        {currentUSer && <h1>Welcome {currentUSer?.name}</h1>}
-        {children}
-    </div>
+    return (
+        currentUser && <div>
+            <h1>Welcome {getLoggedInUserName(currentUser)}</h1>
+            {children}
+        </div>
     );
 
 }

@@ -1,12 +1,12 @@
 import { Button, Form, Input, Radio, message } from 'antd'
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import OrgHospitalForm from './OrgHospitalForm'
 import { RegisterUser } from '../../apicalls/users'
 
 function Register() {
     const [type, setType] = React.useState("donar");
-
+        const navigate = useNavigate();
     const onFinish = async (values) => {
         try {
            
@@ -26,6 +26,13 @@ function Register() {
             message.error(error.message);
         }
     };
+    
+
+    useEffect(() => {
+        if(localStorage.getItem("token")){
+          navigate("/");
+        }
+      })
 
     return (
         <div className='flex h-screen items-center justify-center bg-primary'>
